@@ -4,13 +4,13 @@ SELECT
 Order_Date,
 Total_Sales,
 SUM(Total_Sales) OVER(PARTITION BY YEAR(order_date) ORDER BY Order_Date) AS Running_Total,
-AVG(Avg_Price) OVER(PARTITION BY YEAR(order_date) ORDER BY Order_Date) AS Moving_Aveage
+AVG(Total_Sales) OVER(PARTITION BY YEAR(order_date) ORDER BY Order_Date) AS Moving_Aveage
 FROM(
 	SELECT 
 	DATETRUNC(MONTH,order_date) AS Order_Date,
-	SUM(sales_amount) AS Total_Sales,
-	AVG(price) AS Avg_Price
+	SUM(sales_amount) AS Total_Sales
 	FROM gold.fact_sales
 	WHERE order_date IS NOT NULL
 	GROUP BY DATETRUNC(MONTH,order_date)
 )t
+
